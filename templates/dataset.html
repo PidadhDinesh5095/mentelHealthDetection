@@ -1,44 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Survey Data | Mental Health Detection</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="theme-color" content="#f7f8f3">
+  <title>Survey data | Mindful</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles-form.css') }}">
-  <style>
-    .dataset-page { min-height: 100vh; background: #022031; color: #fff; padding: 4rem 8%; font-family: 'Josefin Sans', sans-serif; }
-    .dataset-page h1 { margin-bottom: .5rem; }
-    .dataset-intro { color: #b9d0d8; margin-bottom: 2rem; }
-    .metric, .dataset-panel { background: #fff; color: #022031; border-radius: 8px; padding: 1.25rem; height: 100%; }
-    .metric strong { display: block; font-size: 2rem; }
-    .metric span { color: #55717a; }
-    .dataset-panel h2 { font-size: 1.35rem; margin-bottom: 1rem; }
-    .table { margin-bottom: 0; }
-    .dataset-actions { margin-top: 2rem; }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+  <header class="form-header">
+    <div class="form-header-inner">
+      <a class="form-brand" href="{{ url_for('hello_world') }}"><span class="brand-mark">m</span>mindful<span class="brand-period">.</span></a>
+      <a class="form-back-link" href="{{ url_for('hello_world') }}">← Back to home</a>
+    </div>
+  </header>
   <main class="dataset-page">
-    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-2">
-      <div>
-        <h1>Survey data</h1>
-        <p class="dataset-intro">A live summary of the responses in survey.csv.</p>
-      </div>
-      <a class="btn btn-outline-light" href="{{ url_for('hello_world') }}">Back home</a>
+    <div class="dataset-heading">
+      <p class="form-eyebrow">A closer look at the data</p>
+      <h1>Survey <em>snapshot.</em></h1>
+      <p>A live summary of responses in the project survey dataset.</p>
     </div>
 
-    <div class="row g-3 mb-4">
-      <div class="col-md-4"><div class="metric"><strong>{{ total_responses }}</strong><span>Total responses</span></div></div>
-      <div class="col-md-4"><div class="metric"><strong>{{ country_count }}</strong><span>Countries represented</span></div></div>
-      <div class="col-md-4"><div class="metric"><strong>{{ missing_responses }}</strong><span>Rows missing model fields</span></div></div>
+    <div class="row g-3 dataset-metrics">
+      <div class="col-md-4"><section class="dataset-metric"><span class="metric-icon" aria-hidden="true">◉</span><strong>{{ total_responses }}</strong><span>Total responses</span></section></div>
+      <div class="col-md-4"><section class="dataset-metric"><span class="metric-icon" aria-hidden="true">⌖</span><strong>{{ country_count }}</strong><span>Countries represented</span></section></div>
+      <div class="col-md-4"><section class="dataset-metric"><span class="metric-icon" aria-hidden="true">↗</span><strong>{{ missing_responses }}</strong><span>Rows missing model fields</span></section></div>
     </div>
 
-    <div class="row g-3 mb-4">
+    <div class="row g-3 dataset-counts">
       <div class="col-lg-6">
         <section class="dataset-panel">
-          <h2>Treatment responses</h2>
-          <table class="table table-sm"><tbody>
+          <div class="dataset-panel-heading"><span>01</span><h2>Treatment responses</h2></div>
+          <table class="table dataset-table"><tbody>
             {% for label, count in treatment_counts.items() %}
             <tr><td>{{ label }}</td><td class="text-end">{{ count }}</td></tr>
             {% endfor %}
@@ -47,8 +44,8 @@
       </div>
       <div class="col-lg-6">
         <section class="dataset-panel">
-          <h2>Work interference</h2>
-          <table class="table table-sm"><tbody>
+          <div class="dataset-panel-heading"><span>02</span><h2>Work interference</h2></div>
+          <table class="table dataset-table"><tbody>
             {% for label, count in work_interfere_counts.items() %}
             <tr><td>{{ label }}</td><td class="text-end">{{ count }}</td></tr>
             {% endfor %}
@@ -57,10 +54,10 @@
       </div>
     </div>
 
-    <section class="dataset-panel">
-      <h2>Response sample</h2>
+    <section class="dataset-panel dataset-sample">
+      <div class="dataset-panel-heading"><span>03</span><div><h2>Response sample</h2><p>A small preview of the survey records.</p></div></div>
       <div class="table-responsive">
-        <table class="table table-sm">
+        <table class="table dataset-table">
           <thead><tr><th>Age</th><th>Gender</th><th>Country</th><th>Treatment</th><th>Work interference</th></tr></thead>
           <tbody>
             {% for row in sample %}
@@ -70,8 +67,8 @@
         </table>
       </div>
     </section>
-
-    <div class="dataset-actions"><a class="btn btn-primary" href="{{ url_for('show_form') }}">Take the assessment</a></div>
+    <div class="dataset-actions"><a class="btn btn-primary" href="{{ url_for('show_form') }}">Take the assessment <span aria-hidden="true">→</span></a></div>
   </main>
+  <footer class="form-footer"><p>Survey data shown for transparency and project exploration.</p></footer>
 </body>
 </html>
